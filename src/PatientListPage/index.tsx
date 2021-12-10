@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import axios from "axios";
 import { Container, Table, Button } from "semantic-ui-react";
-
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
 import { useStateValue } from "../state";
+const PatientIdString = useRef("");
 
-const PatientListPage = () => {
+const PatientListPage = ({ setPatientId }: { setPatientId: () => string }) => {
   const [{ patients }, dispatch] = useStateValue();
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -31,8 +31,10 @@ const PatientListPage = () => {
       dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
-      console.error(e.response?.data || 'Unknown Error');
-      setError(e.response?.data?.error || 'Unknown error');
+      // console.error(e.response?.data || "Unknown Error");
+      // setError(e.response?.data?.error || "Unknown error");
+      console.error("Unknown Error");
+      setError("Unknown error");
     }
   };
 
@@ -50,10 +52,18 @@ const PatientListPage = () => {
             <Table.HeaderCell>Health Rating</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
+
         <Table.Body>
           {Object.values(patients).map((patient: Patient) => (
             <Table.Row key={patient.id}>
-              <Table.Cell>{patient.name}</Table.Cell>
+              <Table.Cell
+                onClick={(t: EventTarget): void => {
+                  setPatientId((t as Element).id);
+                }}
+                id={patient.id}
+              >
+                {patient.name}
+              </Table.Cell>
               <Table.Cell>{patient.gender}</Table.Cell>
               <Table.Cell>{patient.occupation}</Table.Cell>
               <Table.Cell>

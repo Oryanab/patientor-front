@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
-
 import { apiBaseUrl } from "./constants";
 import { useStateValue } from "./state";
-import { Patient } from "./types";
+import { Patient, Gender } from "./types";
+import PatientPage from "./PatientListPage/PatientPage";
 
 import PatientListPage from "./PatientListPage";
 
@@ -26,24 +26,30 @@ const App = () => {
     };
     void fetchPatientList();
   }, [dispatch]);
-
+  const initial: string = "";
+  const [PatientId, setPatientId] = useState<string>(initial);
   return (
-    <div className="App">
-      <Router>
-        <Container>
-          <Header as="h1">Patientor</Header>
-          <Button as={Link} to="/" primary>
-            Home
-          </Button>
-          <Divider hidden />
-          <Switch>
-            <Route path="/">
-              <PatientListPage />
-            </Route>
-          </Switch>
-        </Container>
-      </Router>
-    </div>
+    <>
+      <div className="App">
+        <Router>
+          <Container>
+            <Header as="h1">Patientor</Header>
+            <Button as={Link} to="/" primary>
+              Home
+            </Button>
+            <Divider hidden />
+            <Switch>
+              <Route path="/">
+                <PatientListPage setPatientId={setPatientId} />
+              </Route>
+              <Route path="/info">
+                <PatientPage PatientId={PatientId} />
+              </Route>
+            </Switch>
+          </Container>
+        </Router>
+      </div>
+    </>
   );
 };
 
