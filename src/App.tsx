@@ -4,9 +4,8 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
 import { useStateValue } from "./state";
-import { Patient, Gender } from "./types";
+import { Patient } from "./types";
 import PatientPage from "./PatientListPage/PatientPage";
-
 import PatientListPage from "./PatientListPage";
 
 const App = () => {
@@ -26,8 +25,8 @@ const App = () => {
     };
     void fetchPatientList();
   }, [dispatch]);
-  const initial: string = "";
-  const [PatientId, setPatientId] = useState<string>(initial);
+
+  const [PatientId, setPatientId] = useState("");
   return (
     <>
       <div className="App">
@@ -42,10 +41,10 @@ const App = () => {
               <Route path="/">
                 <PatientListPage setPatientId={setPatientId} />
               </Route>
-              <Route path="/info">
-                <PatientPage PatientId={PatientId} />
-              </Route>
             </Switch>
+            <Route path="/info">
+              <PatientPage PatientId={PatientId} />
+            </Route>
           </Container>
         </Router>
       </div>

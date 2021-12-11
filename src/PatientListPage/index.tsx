@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import axios from "axios";
 import { Container, Table, Button } from "semantic-ui-react";
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
@@ -7,9 +7,8 @@ import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
 import { useStateValue } from "../state";
-const PatientIdString = useRef("");
 
-const PatientListPage = ({ setPatientId }: { setPatientId: () => string }) => {
+const PatientListPage = ({ setPatientId }: { setPatientId: any }) => {
   const [{ patients }, dispatch] = useStateValue();
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -57,10 +56,12 @@ const PatientListPage = ({ setPatientId }: { setPatientId: () => string }) => {
           {Object.values(patients).map((patient: Patient) => (
             <Table.Row key={patient.id}>
               <Table.Cell
-                onClick={(t: EventTarget): void => {
-                  setPatientId((t as Element).id);
-                }}
                 id={patient.id}
+                onClick={(event: { target: HTMLInputElement }) => {
+                  console.log(event.target.id);
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                  setPatientId(event.target.id);
+                }}
               >
                 {patient.name}
               </Table.Cell>
