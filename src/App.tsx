@@ -42,7 +42,7 @@ const App = () => {
                 <PatientListPage setPatientId={setPatientId} />
               </Route>
             </Switch>
-            <Route path="/info">
+            <Route path="/">
               <PatientPage PatientId={PatientId} />
             </Route>
           </Container>

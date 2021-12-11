@@ -31,7 +31,17 @@ export interface PatientEntry {
   entries: Entry[];
 }
 
-export interface Entry {}
+export interface Entry {
+  id: string;
+  date: string;
+  type: string;
+  specialist?: string;
+  employerName?: string;
+  diagnosisCodes: Array<DiagnoseEntry["code"]>;
+  description: string;
+  discharge?: object;
+  sickLeave?: object;
+}
 
 export interface Patient {
   id: string;

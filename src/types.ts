@@ -10,7 +10,26 @@ export enum Gender {
   Other = "other",
 }
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Entry {}
+interface discharge {
+  date: string;
+  criteria: string;
+}
+interface sickLeave {
+  startDate: string;
+  endDate: string;
+}
+
+export interface Entry {
+  id: string;
+  date: string;
+  type: string;
+  specialist?: string;
+  employerName?: string;
+  diagnosisCodes: Array<Diagnosis["code"]>;
+  description: string;
+  discharge?: discharge;
+  sickLeave?: sickLeave;
+}
 
 export interface Patient {
   id: string;
@@ -23,3 +42,14 @@ export interface Patient {
 }
 
 export type PublicPatient = Omit<Patient, "ssn" | "entries">;
+
+// diagnoseRouter
+export type Code = string;
+export type Name = string;
+export type Latin = string;
+
+export interface DiagnoseEntry {
+  code: Code;
+  name: Name;
+  latin?: Latin;
+}
